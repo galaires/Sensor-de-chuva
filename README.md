@@ -163,7 +163,7 @@ Instancia a classe `RainSensor`, inicializa os parâmetros e chama o método `ex
 O programa executado corretamente vai resultar no valor da voltagem convertida de ADC.
 
 
-
+   ![](imagens/leitura.jpg)
 
 ---
 
@@ -218,24 +218,21 @@ Essa comunicação garante baixo atraso na atualização das informações, o qu
 | **IP da placa STM32MP1** | 192.168.42.2                                 |
 | **Porta UDP**            | 5005                                         |
 | **Frequência de envio**  | 1 leitura por segundo                        |
-| **Mensagem transmitida** | `"Está chovendo!"` ou `"Não está chovendo."` |
+| **Mensagem transmitida** | Valor da voltagem convertido do ACD          |
 
 ###  Funcionamento do Cliente UDP
 
 1. O programa inicializa um **socket UDP (SOCK_DGRAM)** responsável por enviar os pacotes de dados.
-2. A cada segundo, a classe `RainSensor` realiza uma nova leitura do ADC e interpreta o resultado como presença ou ausência de chuva.
+2. A cada segundo, a classe `RainSensor` realiza uma nova leitura do ADC e converte em tensão (em volts).
 3. O texto correspondente é enviado ao servidor com o comando:
 
    ```cpp
-   sendto(sock, status.c_str(), status.size(), 0, (sockaddr*)&servAddr, sizeof(servAddr));
+   sendto(sock, msg.c_str(), msg.size(), 0, (sockaddr*)&addr, sizeof(addr));
    ```
 4. O servidor, escutando na porta **5005**, recebe as mensagens e as exibe em tempo real.
 
 > 💡 O protocolo UDP não utiliza confirmação de entrega — característica que o torna mais leve e rápido.
 > Em cada pacote é enviada apenas uma pequena string ASCII, o que minimiza o tráfego e simplifica a implementação.
-
-Para fins de validação e análise, é possível monitorar o tráfego utilizando o **Wireshark**.
-As tramas UDP capturadas com destino à porta **5000** indicam as transmissões periódicas de estado do sensor, confirmando a comunicação entre a placa e o servidor.
 
 ---
 
