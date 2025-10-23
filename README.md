@@ -31,28 +31,58 @@ Essa estrutura modular facilita a manutenção e permite a integração com outr
 
 ---
 
-##  Estrutura da Classe
+Aqui está a **estrutura da classe** baseada no código `RainSensorv2.cpp`, seguindo o mesmo modelo de descrição usado no README anexo.
+Você pode **copiar e colar diretamente no seu README**:
 
-A classe **`RainSensor`** encapsula toda a lógica de leitura do sensor de chuva via interface **IIO** do Linux embarcado.
+---
 
-### **Atributos**
-- `sensorPath`: caminho do arquivo do ADC (ex: `/sys/bus/iio/devices/iio:device0/in_voltage19_raw`)  
-- `threshold`: valor limiar a partir do qual considera-se que está chovendo  
+### **Estrutura da Classe**
 
-### **Métodos principais**
-- `int readValue()`: lê o valor bruto do ADC e retorna o nível de umidade detectado.  
-  Retorna `-1` em caso de erro de leitura.  
+Atributos:
 
-- `bool isRaining()`: compara o valor lido com o `threshold`.  
-  Retorna `true` → se o valor ultrapassa o limiar (indicando chuva).  
-  Retorna `false` → se o valor está abaixo do limiar (sem chuva).  
+* `std::string adc_path`: caminho do canal ADC no sistema Linux embarcado (ex: `/sys/bus/iio/devices/iio:device0/in_voltage13_raw`).
+* `std::string dest_ip`: endereço IP do servidor remoto para envio UDP.
+* `int dest_port`: número da porta UDP de destino.
+* `int max_envios`: quantidade máxima de transmissões.
+* `int intervalo_seg`: intervalo entre cada envio (em segundos).
 
-- `int main()`: instancia a classe `RainSensor`, lê o valor e exibe no terminal:  
-  ```
-  Valor do sensor: 1320
-  Está chovendo!
-  ```
-  O loop pode ser configurado para leitura contínua e envio UDP periódico.
+Funções principais:
+
+`int lerSensor()`
+Lê o valor bruto do ADC (inteiro entre 0 e 4096) a partir do arquivo indicado em `adc_path`.
+Retorna o valor lido.
+
+`float converterTensao(int valor_adc)`
+Converte a leitura do ADC em tensão (em volts) usando a relação:
+
+```
+tensão = (3.3 * valor_adc) / 4096
+```
+
+Retorna o valor convertido.
+
+`std::string gerarMensagem(float tensao)`
+Formata a mensagem a ser enviada via UDP no padrão:
+
+```
+"Rain=<tensão>V"
+```
+
+`bool enviarUDP(const std::string& mensagem)`
+Cria o socket UDP e envia a string formatada para o IP e porta definidos.
+Retorna `true` em caso de sucesso, `false` se ocorrer falha no envio.
+
+`void executar()`
+Executa o loop principal de leitura e envio:
+
+1. Lê o valor do ADC.
+2. Converte para tensão.
+3. Gera a mensagem.
+4. Envia via UDP.
+5. Aguarda `intervalo_seg` segundos entre os envios.
+
+`int main()`
+Instancia a classe `RainSensor`, inicializa os parâmetros e chama o método `executar()`.
 
 ---
 
@@ -106,16 +136,34 @@ A classe **`RainSensor`** encapsula toda a lógica de leitura do sensor de chuva
 ###  Execução no Kit
 1. Transferir o executável:
    ```bash
-   scp bin/sensor_chuva root@<ip_kit>:/home/root
+   scp bin/sensor_chuva root@192.168.42.2:/home/root
    ```
 2. Conectar via SSH:
    ```bash
-   ssh root@<ip_kit>
+   ssh root@192.168.42.2
    ```
-3. Executar aplicação:
+3. Acessar o diretório:
    ```bash
-   ./sensor_chuva
+   cd ./projeto_rain_sensor
    ```
+4. No terminal da placa:
+  ```bash
+   chmod +x sensor
+   ./sensor
+   ```
+5. O programa exibirá a tensão medida:
+    ```bash
+   Exemplo de saída
+     Sent: Rain=9.590625V
+     Sent: Rain=7.089038V
+     Sent: Rain=8.450700V
+    
+   ```    
+### **Exemplo de execução**
+O programa executado corretamente vai resultar no valor da voltagem convertida de ADC.
+
+
+
 
 ---
 
@@ -158,9 +206,6 @@ Este executável realiza a **leitura do Módulo de Chuva (SS29)** diretamente no
  Durante a execução, o programa exibirá no terminal os valores lidos do sensor de chuva em tempo real.
 
 ---
-Claro! Aqui está a seção formatada e pronta para **colar diretamente** no seu README 👇
-
----
 
 ##  Comunicação via UDP
 
@@ -171,7 +216,7 @@ Essa comunicação garante baixo atraso na atualização das informações, o qu
 | ------------------------ | -------------------------------------------- |
 | **IP do servidor**       | 192.168.42.10                                |
 | **IP da placa STM32MP1** | 192.168.42.2                                 |
-| **Porta UDP**            | 5000                                         |
+| **Porta UDP**            | 5005                                         |
 | **Frequência de envio**  | 1 leitura por segundo                        |
 | **Mensagem transmitida** | `"Está chovendo!"` ou `"Não está chovendo."` |
 
@@ -184,7 +229,7 @@ Essa comunicação garante baixo atraso na atualização das informações, o qu
    ```cpp
    sendto(sock, status.c_str(), status.size(), 0, (sockaddr*)&servAddr, sizeof(servAddr));
    ```
-4. O servidor, escutando na porta **5000**, recebe as mensagens e as exibe em tempo real.
+4. O servidor, escutando na porta **5005**, recebe as mensagens e as exibe em tempo real.
 
 > 💡 O protocolo UDP não utiliza confirmação de entrega — característica que o torna mais leve e rápido.
 > Em cada pacote é enviada apenas uma pequena string ASCII, o que minimiza o tráfego e simplifica a implementação.
