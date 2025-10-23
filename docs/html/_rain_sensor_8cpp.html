@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>RainSensor STM32MP1: Referência ao ficheiro RainSensor.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">RainSensor STM32MP1
+   </div>
+   <div id="projectbrief">Sistema de detecção de chuva com envio UDP via STM32MP1</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Localizar',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_rain_sensor_8cpp.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrada</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Referência ao ficheiro RainSensor.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &lt;arpa/inet.h&gt;</code><br />
+<code>#include &lt;sys/socket.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Diagrama de dependências de inclusão para RainSensor.cpp:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+</div>
+</div>
+<p><a href="_rain_sensor_8cpp_source.html">Ir para o código fonte deste ficheiro.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Funções</h2></td></tr>
+<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4" id="r_ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
+</table>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentação das funções</h2>
+<a id="ae66f6b31b5ad750f1fe042a706a4e3d4" name="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&#160;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definido na linha <a class="el" href="_rain_sensor_8cpp_source.html#l00008">8</a> do ficheiro <a class="el" href="_rain_sensor_8cpp_source.html">RainSensor.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">    8</span>           {</div>
+<div class="line"><span class="lineno">    9</span>    <span class="keyword">const</span> std::string adc_path = <span class="stringliteral">&quot;/sys/bus/iio/devices/iio:device0/in_voltage13_raw&quot;</span>;</div>
+<div class="line"><span class="lineno">   10</span>    <span class="keyword">const</span> <span class="keywordtype">char</span>* dest_ip = <span class="stringliteral">&quot;192.168.42.10&quot;</span>;</div>
+<div class="line"><span class="lineno">   11</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> dest_port = 5005;</div>
+<div class="line"><span class="lineno">   12</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> max_envios = 100;</div>
+<div class="line"><span class="lineno">   13</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> intervalo_seg = 1; <span class="comment">// intervalo entre envios (segundos)</span></div>
+<div class="line"><span class="lineno">   14</span> </div>
+<div class="line"><span class="lineno">   15</span>    <span class="comment">// Criação do socket UDP</span></div>
+<div class="line"><span class="lineno">   16</span>    <span class="keywordtype">int</span> sock = socket(AF_INET, SOCK_DGRAM, 0);</div>
+<div class="line"><span class="lineno">   17</span>    <span class="keywordflow">if</span> (sock &lt; 0) {</div>
+<div class="line"><span class="lineno">   18</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Erro ao criar socket.&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">   19</span>        <span class="keywordflow">return</span> 1;</div>
+<div class="line"><span class="lineno">   20</span>    }</div>
+<div class="line"><span class="lineno">   21</span> </div>
+<div class="line"><span class="lineno">   22</span>    sockaddr_in addr{};</div>
+<div class="line"><span class="lineno">   23</span>    addr.sin_family = AF_INET;</div>
+<div class="line"><span class="lineno">   24</span>    addr.sin_port = htons(dest_port);</div>
+<div class="line"><span class="lineno">   25</span>    inet_pton(AF_INET, dest_ip, &amp;addr.sin_addr);</div>
+<div class="line"><span class="lineno">   26</span> </div>
+<div class="line"><span class="lineno">   27</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; max_envios; ++i) {</div>
+<div class="line"><span class="lineno">   28</span>        std::ifstream f(adc_path);</div>
+<div class="line"><span class="lineno">   29</span>        <span class="keywordflow">if</span> (!f.is_open()) {</div>
+<div class="line"><span class="lineno">   30</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;Erro ao abrir &quot;</span> &lt;&lt; adc_path &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">   31</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">   32</span>        }</div>
+<div class="line"><span class="lineno">   33</span> </div>
+<div class="line"><span class="lineno">   34</span>        <span class="keywordtype">int</span> val = 0;</div>
+<div class="line"><span class="lineno">   35</span>        f &gt;&gt; val;</div>
+<div class="line"><span class="lineno">   36</span>        f.close();</div>
+<div class="line"><span class="lineno">   37</span> </div>
+<div class="line"><span class="lineno">   38</span>        <span class="keywordtype">float</span> voltage = (3.3f * val) / 4096.0f;</div>
+<div class="line"><span class="lineno">   39</span>        std::string msg = <span class="stringliteral">&quot;Rain=&quot;</span> + std::to_string(voltage) + <span class="stringliteral">&quot;V&quot;</span>;</div>
+<div class="line"><span class="lineno">   40</span> </div>
+<div class="line"><span class="lineno">   41</span>        ssize_t sent = sendto(sock, msg.c_str(), msg.size(), 0, (sockaddr*)&amp;addr, <span class="keyword">sizeof</span>(addr));</div>
+<div class="line"><span class="lineno">   42</span>        <span class="keywordflow">if</span> (sent &lt; 0) {</div>
+<div class="line"><span class="lineno">   43</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;Erro ao enviar dados via UDP.&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">   44</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">   45</span>        }</div>
+<div class="line"><span class="lineno">   46</span> </div>
+<div class="line"><span class="lineno">   47</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;[&quot;</span> &lt;&lt; i + 1 &lt;&lt; <span class="stringliteral">&quot;/&quot;</span> &lt;&lt; max_envios &lt;&lt; <span class="stringliteral">&quot;] &quot;</span></div>
+<div class="line"><span class="lineno">   48</span>                  &lt;&lt; <span class="stringliteral">&quot;Enviado para &quot;</span> &lt;&lt; dest_ip &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; dest_port</div>
+<div class="line"><span class="lineno">   49</span>                  &lt;&lt; <span class="stringliteral">&quot; -&gt; &quot;</span> &lt;&lt; msg &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">   50</span> </div>
+<div class="line"><span class="lineno">   51</span>        sleep(intervalo_seg);</div>
+<div class="line"><span class="lineno">   52</span>    }</div>
+<div class="line"><span class="lineno">   53</span> </div>
+<div class="line"><span class="lineno">   54</span>    close(sock);</div>
+<div class="line"><span class="lineno">   55</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Envio concluído após &quot;</span> &lt;&lt; max_envios &lt;&lt; <span class="stringliteral">&quot; transmissões.&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">   56</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">   57</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="_rain_sensor_8cpp.html">RainSensor.cpp</a></li>
+    <li class="footer">Gerado em <span class="timestamp"></span> para RainSensor STM32MP1 por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

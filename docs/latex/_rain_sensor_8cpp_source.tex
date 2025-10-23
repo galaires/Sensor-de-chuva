@@ -1,0 +1,62 @@
+\doxysection{Rain\+Sensor.\+cpp}
+\hypertarget{_rain_sensor_8cpp_source}{}\label{_rain_sensor_8cpp_source}\mbox{\hyperlink{_rain_sensor_8cpp}{Ir para a documentação deste ficheiro.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <arpa/inet.h>}}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <sys/socket.h>}}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00008}\mbox{\hyperlink{_rain_sensor_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{00008}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{_rain_sensor_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00009}00009\ \ \ \ \ \textcolor{keyword}{const}\ std::string\ adc\_path\ =\ \textcolor{stringliteral}{"{}/sys/bus/iio/devices/iio:device0/in\_voltage13\_raw"{}};}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00010}00010\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ dest\_ip\ =\ \textcolor{stringliteral}{"{}192.168.42.10"{}};}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00011}00011\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ dest\_port\ =\ 5005;}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00012}00012\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ max\_envios\ =\ 100;}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00013}00013\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ intervalo\_seg\ =\ 1;\ \textcolor{comment}{//\ intervalo\ entre\ envios\ (segundos)}}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00015}00015\ \ \ \ \ \textcolor{comment}{//\ Criação\ do\ socket\ UDP}}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordtype}{int}\ sock\ =\ socket(AF\_INET,\ SOCK\_DGRAM,\ 0);}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordflow}{if}\ (sock\ <\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Erro\ ao\ criar\ socket."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00020}00020\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00022}00022\ \ \ \ \ sockaddr\_in\ addr\{\};}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00023}00023\ \ \ \ \ addr.sin\_family\ =\ AF\_INET;}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00024}00024\ \ \ \ \ addr.sin\_port\ =\ htons(dest\_port);}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00025}00025\ \ \ \ \ inet\_pton(AF\_INET,\ dest\_ip,\ \&addr.sin\_addr);}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ max\_envios;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ std::ifstream\ f(adc\_path);}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!f.is\_open())\ \{}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Erro\ ao\ abrir\ "{}}\ <<\ adc\_path\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ val\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ f\ >>\ val;}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ f.close();}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ voltage\ =\ (3.3f\ *\ val)\ /\ 4096.0f;}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ std::string\ msg\ =\ \textcolor{stringliteral}{"{}Rain="{}}\ +\ std::to\_string(voltage)\ +\ \textcolor{stringliteral}{"{}V"{}};}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ ssize\_t\ sent\ =\ sendto(sock,\ msg.c\_str(),\ msg.size(),\ 0,\ (sockaddr*)\&addr,\ \textcolor{keyword}{sizeof}(addr));}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (sent\ <\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Erro\ ao\ enviar\ dados\ via\ UDP."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}["{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}/"{}}\ <<\ max\_envios\ <<\ \textcolor{stringliteral}{"{}]\ "{}}}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Enviado\ para\ "{}}\ <<\ dest\_ip\ <<\ \textcolor{stringliteral}{"{}:"{}}\ <<\ dest\_port}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ -\/>\ "{}}\ <<\ msg\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ sleep(intervalo\_seg);}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00052}00052\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00054}00054\ \ \ \ \ close(sock);}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00055}00055\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Envio\ concluído\ após\ "{}}\ <<\ max\_envios\ <<\ \textcolor{stringliteral}{"{}\ transmissões."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00056}00056\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{_rain_sensor_8cpp_source_l00057}00057\ \}}
+
+\end{DoxyCode}

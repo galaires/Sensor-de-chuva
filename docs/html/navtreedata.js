@@ -24,13 +24,12 @@
 */
 var NAVTREE =
 [
-  [ "My Project", "index.html", [
-    [ "Classes", "annotated.html", [
-      [ "Class List", "annotated.html", "annotated_dup" ],
-      [ "Class Index", "classes.html", null ],
-      [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ]
+  [ "RainSensor STM32MP1", "index.html", [
+    [ "Ficheiros", "files.html", [
+      [ "Lista de ficheiros", "files.html", "files_dup" ],
+      [ "Membros dos Ficheiros", "globals.html", [
+        [ "Tudo", "globals.html", null ],
+        [ "Funções", "globals_func.html", null ]
       ] ]
     ] ]
   ] ]
@@ -38,9 +37,9 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html"
+"_rain_sensor_8cpp.html"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronization';
-var SYNCOFFMSG = 'click to enable panel synchronization';
-var LISTOFALLMEMBERS = 'List of all members';
+var SYNCONMSG = 'clique para desativar a sincronização do painel';
+var SYNCOFFMSG = 'clique para ativar a sincronização do painel';
+var LISTOFALLMEMBERS = 'Mostrar lista completa dos membros';

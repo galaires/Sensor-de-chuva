@@ -1,0 +1,84 @@
+\doxysection{Referência ao ficheiro Rain\+Sensor.\+cpp}
+\hypertarget{_rain_sensor_8cpp}{}\label{_rain_sensor_8cpp}\index{RainSensor.cpp@{RainSensor.cpp}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+Diagrama de dependências de inclusão para Rain\+Sensor.\+cpp\+:
+% FIG 0
+\doxysubsubsection*{Funções}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{_rain_sensor_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{_rain_sensor_8cpp_doc-func-members}
+\doxysubsection{Documentação das funções}
+\Hypertarget{_rain_sensor_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\index{RainSensor.cpp@{RainSensor.cpp}!main@{main}}
+\index{main@{main}!RainSensor.cpp@{RainSensor.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{_rain_sensor_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4} 
+int main (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definido na linha \mbox{\hyperlink{_rain_sensor_8cpp_source_l00008}{8}} do ficheiro \mbox{\hyperlink{_rain_sensor_8cpp_source}{Rain\+Sensor.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00008\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{const}\ std::string\ adc\_path\ =\ \textcolor{stringliteral}{"{}/sys/bus/iio/devices/iio:device0/in\_voltage13\_raw"{}};}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ dest\_ip\ =\ \textcolor{stringliteral}{"{}192.168.42.10"{}};}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ dest\_port\ =\ 5005;}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ max\_envios\ =\ 100;}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ intervalo\_seg\ =\ 1;\ \textcolor{comment}{//\ intervalo\ entre\ envios\ (segundos)}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{comment}{//\ Criação\ do\ socket\ UDP}}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{int}\ sock\ =\ socket(AF\_INET,\ SOCK\_DGRAM,\ 0);}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordflow}{if}\ (sock\ <\ 0)\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Erro\ ao\ criar\ socket."{}}\ <<\ std::endl;}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00020\ \ \ \ \ \}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ sockaddr\_in\ addr\{\};}
+\DoxyCodeLine{00023\ \ \ \ \ addr.sin\_family\ =\ AF\_INET;}
+\DoxyCodeLine{00024\ \ \ \ \ addr.sin\_port\ =\ htons(dest\_port);}
+\DoxyCodeLine{00025\ \ \ \ \ inet\_pton(AF\_INET,\ dest\_ip,\ \&addr.sin\_addr);}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ max\_envios;\ ++i)\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ std::ifstream\ f(adc\_path);}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!f.is\_open())\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Erro\ ao\ abrir\ "{}}\ <<\ adc\_path\ <<\ std::endl;}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ val\ =\ 0;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ f\ >>\ val;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ f.close();}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ voltage\ =\ (3.3f\ *\ val)\ /\ 4096.0f;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ std::string\ msg\ =\ \textcolor{stringliteral}{"{}Rain="{}}\ +\ std::to\_string(voltage)\ +\ \textcolor{stringliteral}{"{}V"{}};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ ssize\_t\ sent\ =\ sendto(sock,\ msg.c\_str(),\ msg.size(),\ 0,\ (sockaddr*)\&addr,\ \textcolor{keyword}{sizeof}(addr));}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (sent\ <\ 0)\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Erro\ ao\ enviar\ dados\ via\ UDP."{}}\ <<\ std::endl;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}["{}}\ <<\ i\ +\ 1\ <<\ \textcolor{stringliteral}{"{}/"{}}\ <<\ max\_envios\ <<\ \textcolor{stringliteral}{"{}]\ "{}}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Enviado\ para\ "{}}\ <<\ dest\_ip\ <<\ \textcolor{stringliteral}{"{}:"{}}\ <<\ dest\_port}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ -\/>\ "{}}\ <<\ msg\ <<\ std::endl;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ sleep(intervalo\_seg);}
+\DoxyCodeLine{00052\ \ \ \ \ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ close(sock);}
+\DoxyCodeLine{00055\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Envio\ concluído\ após\ "{}}\ <<\ max\_envios\ <<\ \textcolor{stringliteral}{"{}\ transmissões."{}}\ <<\ std::endl;}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00057\ \}}
+
+\end{DoxyCode}
