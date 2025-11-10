@@ -31,11 +31,6 @@ Essa estrutura modular facilita a manutenção e permite a integração com outr
 
 ---
 
-Aqui está a **estrutura da classe** baseada no código `RainSensorv2.cpp`, seguindo o mesmo modelo de descrição usado no README anexo.
-Você pode **copiar e colar diretamente no seu README**:
-
----
-
 ### **Estrutura da Classe**
 
 Atributos:
@@ -91,7 +86,7 @@ Instancia a classe `RainSensor`, inicializa os parâmetros e chama o método `ex
 ```
 📂 Sensor-de-chuva
  ├── 📂 src
- │    ├── Leitor.cpp      # Classe de leitura e envio do sensor
+ │    ├── RainSensor.cpp      # Classe de leitura e envio do sensor
  │
  ├── 📂 docs
  │    ├── Doxyfile             # Configuração Doxygen
@@ -99,10 +94,10 @@ Instancia a classe `RainSensor`, inicializa os parâmetros e chama o método `ex
  │
  │
  ├── 📂 bin
- │    └── programa             # Executável funcional do sensor de chuva
+ │    └── RainSensor             # Executável funcional do sensor de chuva
  │
  ├── README.md                 # Este arquivo
- └── Makefile                  # Script de compilação cruzada
+
 ```
 
 ---
@@ -123,15 +118,19 @@ Instancia a classe `RainSensor`, inicializa os parâmetros e chama o método `ex
 ##  Compilação e Execução
 
 ###  Compilação Cruzada
-1. Instalar a toolchain na VM Linux:
-   ```bash
-   tar -xvf arm-buildroot-linux-gnueabihf_sdk-DK2.tar.gz
-   ```
-2. Compilar o código:
-   ```bash
-   source /path/to/toolchain/environment-setup
-   make
-   ```
+Baixar a toolchain:
+
+Baixe o arquivo **`arm-buildroot-linux-gnueabihf_sdk-buildroot.tar.gz`** nesse [link](https://drive.google.com/file/d/1qpq3QeK5f7T061LFA0JlJz2fgMQDvyMn/view)
+. Esta toolchain permitirá a compilação cruzada para o kit de desenvolvimento DK1.
+
+Extraia a toolchain ARM:
+```
+tar -xvf arm-buildroot-linux-gnueabihf_sdk-buildroot.tar.gz
+```
+Compile o programa:
+```
+arm-linux-gnueabihf-g++ -o RainSensor.cpp RainSensor -std=c++17
+```
 
 ###  Execução no Kit
 1. Transferir o executável:
@@ -167,46 +166,6 @@ O programa executado corretamente vai resultar no valor da voltagem convertida d
 
 ---
 
-##  Programa Funcional no Kit
-
-O repositório já contém um **executável compilado** chamado `programa`, localizado na pasta `bin/`.  
-Este executável realiza a **leitura do Módulo de Chuva (SS29)** diretamente no kit de desenvolvimento **STM32MP1-DK1**.
-
-### 📂 Estrutura recomendada
-```
-📂 Sensor-de-chuva
- ├── 📂 bin
- │    └── programa          # Executável funcional do sensor de chuva
- ├── 📂 src
- │    ├── Leitor.cpp
- ...
-```
-
-###  Execução do programa
-1. Transferir o executável para o kit:
-   ```bash
-   scp bin/programa root@<ip_kit>:/home/root
-   ```
-
-2. Acessar o kit via SSH:
-   ```bash
-   ssh root@<ip_kit>
-   ```
-
-3. Tornar o arquivo executável (se necessário):
-   ```bash
-   chmod +x programa
-   ```
-
-4. Executar o programa:
-   ```bash
-   ./programa
-   ```
-
- Durante a execução, o programa exibirá no terminal os valores lidos do sensor de chuva em tempo real.
-
----
-
 ##  Comunicação via UDP
 
 Após a leitura dos dados do sensor de chuva, o sistema embarcado transmite periodicamente o estado atual para um servidor remoto utilizando o protocolo **UDP (User Datagram Protocol)**.
@@ -231,8 +190,12 @@ Essa comunicação garante baixo atraso na atualização das informações, o qu
    ```
 4. O servidor, escutando na porta **5005**, recebe as mensagens e as exibe em tempo real.
 
-> 💡 O protocolo UDP não utiliza confirmação de entrega — característica que o torna mais leve e rápido.
+>  O protocolo UDP não utiliza confirmação de entrega — característica que o torna mais leve e rápido.
 > Em cada pacote é enviada apenas uma pequena string ASCII, o que minimiza o tráfego e simplifica a implementação.
+
+
+![](imagens/UDP.jpg)
+
 
 ---
 
@@ -247,7 +210,7 @@ Essa comunicação garante baixo atraso na atualização das informações, o qu
 - **Kit de Desenvolvimento:** STM32MP1-DK1  
 - **Linguagem:** C++17  
 - **Ferramentas:** Doxygen, Make, Toolchain ARM  
-- **Servidor/Interface:** Python 3.10+, bibliotecas `socket`, `tkinter`, `matplotlib`  
+- **Servidor/Interface:** bibliotecas `socket`, `tkinter`, `matplotlib`  
 
 ---
 
