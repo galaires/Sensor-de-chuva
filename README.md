@@ -211,7 +211,7 @@ Quando a tensão se encontra acima de 5V, o programa retorna "Sem chuva" em cor 
 
 
 
-
+---
 
 ##  Dependências
 - **Kit de Desenvolvimento:** STM32MP1-DK1  
