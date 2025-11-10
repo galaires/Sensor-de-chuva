@@ -86,12 +86,14 @@ Instancia a classe `RainSensor`, inicializa os parâmetros e chama o método `ex
 ```
 📂 Sensor-de-chuva
  ├── 📂 src
- │    ├── RainSensor.cpp      # Classe de leitura e envio do sensor
- │
+ │    ├── RainSensor.cpp                    # Classe de leitura e envio do sensor
+ │    └── sensor_chuva_udp_grafico.py       # Programa da interface
+ |
  ├── 📂 docs
  │    ├── Doxyfile             # Configuração Doxygen
  │    └── 📂 html             # Documentação gerada
- │
+ |
+ ├── 📂 imagens               # Imagens utilizadas
  │
  ├── 📂 bin
  │    └── RainSensor             # Executável funcional do sensor de chuva
