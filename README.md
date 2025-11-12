@@ -131,7 +131,7 @@ tar -xvf arm-buildroot-linux-gnueabihf_sdk-buildroot.tar.gz
 ```
 Compile o programa:
 ```
-arm-linux-gnueabihf-g++ -o RainSensor.cpp RainSensor -std=c++17
+arm-linux-gnueabihf-g++ RainSensor.cpp -o RainSensor -std=c++17
 ```
 
 ###  Execução no Kit
