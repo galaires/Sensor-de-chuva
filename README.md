@@ -209,6 +209,12 @@ Quando a tensão se encontra acima de 5V, o programa retorna "Sem chuva" em cor 
 
 ![](imagens/sem_chuva.jpg)    ![](imagens/chuvendo.jpg)
 
+Posteriormente, a interface foi atualizda com a função de salvamento do histórico em arquivos de log pendente.
+
+
+
+![](imagens/nova_interface.jpg)
+
 
 
 ---
