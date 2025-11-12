@@ -203,7 +203,7 @@ Essa comunicação garante baixo atraso na atualização das informações, o qu
 
 ## Interface
 
-O programa da interface `sensor_chuva_udp_grafico.py` fornece um gráfico da leitura do sensor em Volts pelo tempo transcorrido. Ele atualiza a cada 1s e mostra um intervalo de 60s. 
+O programa da interface `interface.py` fornece um gráfico da leitura do sensor em Volts pelo tempo transcorrido. Ele atualiza a cada 1s e mostra um intervalo de 60s. 
 
 Quando a tensão se encontra acima de 5V, o programa retorna "Sem chuva" em cor verde e abaixo de 5V retorna "Chovendo" em cor azul. No topo da janela, mostra-se o valor atual lido pelo sensor.
 
