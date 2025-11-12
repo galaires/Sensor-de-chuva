@@ -111,8 +111,8 @@ Instancia a classe `RainSensor`, inicializa os parâmetros e chama o método `ex
 - **Saída Digital (opcional):** Indica se o nível ultrapassou um limiar definido no módulo.  
 
 ###  Funcionamento:
-- Em ambiente seco → valores baixos no ADC.  
-- Em contato com umidade/chuva → valores altos no ADC.  
+- Em ambiente seco → valores altos no ADC.  
+- Em contato com umidade/chuva → valores baixos no ADC.  
 - Permite detectar infiltrações ou ambientes inadequados para transporte da carga.  
 
 ---
@@ -131,7 +131,7 @@ tar -xvf arm-buildroot-linux-gnueabihf_sdk-buildroot.tar.gz
 ```
 Compile o programa:
 ```
-arm-linux-gnueabihf-g++ -o RainSensor.cpp RainSensor -std=c++17
+arm-linux-gnueabihf-g++ RainSensor.cpp -o RainSensor -std=c++17
 ```
 
 ###  Execução no Kit
@@ -201,12 +201,17 @@ Essa comunicação garante baixo atraso na atualização das informações, o qu
 
 ---
 
+## Interface
+
+O programa da interface `sensor_chuva_udp_grafico.py` fornece um gráfico da leitura do sensor em Volts pelo tempo transcorrido. Ele atualiza a cada 1s e mostra um intervalo de 60s. 
+
+Quando a tensão se encontra acima de 5V, o programa retorna "Sem chuva" em cor verde e abaixo de 5V retorna "Chovendo" em cor azul. No topo da janela, mostra-se o valor atual lido pelo sensor.
+
+![](imagens/sem_chuva.jpg)    ![](imagens/chuvendo.jpg)
 
 
 
-
-
-
+---
 
 ##  Dependências
 - **Kit de Desenvolvimento:** STM32MP1-DK1  
